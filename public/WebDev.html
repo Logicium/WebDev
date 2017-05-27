@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>WebDev</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/styles/hover.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 </head>
@@ -14,13 +15,27 @@
         var WebApp = function(){
 
             var div = function(){return $('<div>').css('height','50px')};
+            var homeImage = 'https://images.unsplash.com/photo-1465411801898-f1a78de00afc?dpr=1.100000023841858&auto=format&fit=crop&w=1500&h=997&q=80&cs=tinysrgb&crop=&bg=';
+            this.backgroundImage = $('<div>').addClass('backgroundImage');
 
-            this.theTitle =  div().text('The Article');
-            this.navBarContainer = div().addClass('row');
-            this.homeArea = div().addClass('col-xs-3').css('background-size','cover').css('background-image','https://images.unsplash.com/photo-1465411801898-f1a78de00afc?dpr=1.100000023841858&auto=format&fit=crop&w=1500&h=997&q=80&cs=tinysrgb&crop=&bg=');
+            var backgroundClass = {
+                'height': '100%',
+                'width': '100%',
+                'background-size' :'cover',
+                'position': 'fixed',
+                'z-index': '-1;filter: blur(5px)'
+            };
+
+            this.backgroundImage.css(backgroundClass);
+
+            this.backgroundImage.css('background-image','linear-gradient(to left,rgba(24, 90, 157, 0.35), rgba(67, 206, 162, 0.35)), url('+ homeImage +')');
+
+            this.navBarContainer = div().addClass('row').css('height','100px');
+            this.homeArea = div().addClass('col-xs-3');
+            this.homeImage = div().css('width','50px').css('background-image','https://images.unsplash.com/photo-1465411801898-f1a78de00afc?dpr=1.100000023841858&auto=format&fit=crop&w=1500&h=997&q=80&cs=tinysrgb&crop=&bg=').css('background-size','cover');
             this.navBarRowContainer = div().addClass('col-xs-9');
-            this.navBarRow =  div().addClass('row');
-            this.contentContainer = div().css('margin','30px').css('background','rgba(255,255,255,0.75)');
+            this.navBarRow =  div().css('height','150px').addClass('row').css('padding','50px');
+            this.contentContainer = $('<div>').css('background','rgba(255,255,255,0.75)');
             this.contentContainer.addClass('text-center');
 
             this.theBody = $('<div>');
@@ -30,6 +45,7 @@
 
             assemble: function(){
                 $('body').append(
+                    this.backgroundImage,
                     this.contentContainer.append(
                         this.navBarContainer.append(
                             this.homeArea,
@@ -46,7 +62,9 @@
 
             createNavElements:function(navNames){
                 var elements = [];
-                var navDiv = function(){return $('<div>').addClass('col-xs-3').css('height','50px').css('width','75px')};
+                var navDiv = function(){
+                    return $('<div>').addClass('col-xs-3 hvr-glow').css('height','50px').css('width','150px')
+                };
                 for(var i = 0;i<navNames.length;i++){
                     elements.push(
                         navDiv().text(navNames[i])
