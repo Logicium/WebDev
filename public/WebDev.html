@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebDev</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <script>
+        //jQuery can select elements on an existing page, or in another jQuery html document object.
+        //jQuery can construct elements and append them to the page.
+        var WebApp = function(){
+
+            var div = function(){return $('<div>').css('height','50px')};
+
+            this.theTitle =  div().text('The Article');
+            this.navBarContainer = div().addClass('row');
+            this.homeArea = div().addClass('col-xs-3').css('background-size','cover').css('background-image','https://images.unsplash.com/photo-1465411801898-f1a78de00afc?dpr=1.100000023841858&auto=format&fit=crop&w=1500&h=997&q=80&cs=tinysrgb&crop=&bg=');
+            this.navBarRowContainer = div().addClass('col-xs-9');
+            this.navBarRow =  div().addClass('row');
+            this.contentContainer = div().css('margin','30px').css('background','rgba(255,255,255,0.75)');
+            this.contentContainer.addClass('text-center');
+
+            this.theBody = $('<div>');
+        };
+
+        WebApp.prototype = {
+
+            assemble: function(){
+                $('body').append(
+                    this.contentContainer.append(
+                        this.navBarContainer.append(
+                            this.homeArea,
+                            this.navBarRowContainer.append(
+                                this.navBarRow.append(
+                                    this.createNavElements(['Tours','Listen','Merch','Contact'])
+                                )
+                            )
+                        ),
+                        this.contentContainer
+                    )
+                );
+            },
+
+            createNavElements:function(navNames){
+                var elements = [];
+                var navDiv = function(){return $('<div>').addClass('col-xs-3').css('height','50px').css('width','75px')};
+                for(var i = 0;i<navNames.length;i++){
+                    elements.push(
+                        navDiv().text(navNames[i])
+                    )
+                }
+                return elements;
+            }
+        };
+
+        var WA = new WebApp();
+        WA.assemble();
+
+    </script>
+</body>
+</html>
